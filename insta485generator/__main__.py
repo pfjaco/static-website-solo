@@ -29,7 +29,7 @@ def main(input_dir,output,verbose):
         filename = pathlib.Path(pwd + file_url + input_dir + "/html/" + template_dir)
         print(filename)
         with open(filename, "w") as f:
-            f.write(output)
+            f.write(output)        
     except FileExistsError:
             print(f"Error: '{input_dir}/html' directory already exists")
 
