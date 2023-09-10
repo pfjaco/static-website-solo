@@ -4,6 +4,7 @@ import pathlib
 import os
 import jinja2
 import json
+import shutil
 @click.command()
 @click.option('--output','-o', help="Output directory.", is_flag=True)
 @click.option('--verbose','-v', help="Print more output.", metavar="PATH")
@@ -21,17 +22,18 @@ def main(input_dir,output,verbose):
         loader=jinja2.FileSystemLoader(load_template_dir),
         autoescape=jinja2.select_autoescape(['html', 'xml']),
     )
-    template = template_env.get_template(template_dir)
-    
+    template = template_env.get_template(template_dir)    
     output = template.render(file_read[0]["context"])
     try:
         pathlib.Path(pwd + file_url + input_dir +"/html").mkdir(parents=True, exist_ok=False)
         filename = pathlib.Path(pwd + file_url + input_dir + "/html/" + template_dir)
         print(filename)
         with open(filename, "w") as f:
-            f.write(output)        
+            f.write(output)               
     except FileExistsError:
             print(f"Error: '{input_dir}/html' directory already exists")
+    if(pathlib.Path.exists(pathlib.Path(pwd + file_url + input_dir + "/static/"))):
+            shutil.copytree(pathlib.Path(pwd + file_url + input_dir + "/static/css/"),pathlib.Path(pwd + file_url + input_dir + "/html/css/"))
 
 
 def load_json(input_dir):
