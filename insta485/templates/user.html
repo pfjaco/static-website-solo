@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="en">
     <head>
         <title>insta485</title>
@@ -17,26 +18,31 @@
             <div id = "top-bar-right" class="top-bar">
             <a href="/explore/">explore</a>
             &nbsp;|&nbsp;
-            <a href="/users/awdeorio/">awdeorio</a>
+            <a href="/users/{{logname}}/">{{logname}}</a>
             </div>
         
         </div>
-        <h1>awdeorio</h1>
+        <h1>{{username}} </h1>
         <div>
-            2 posts
-            <a href="/users/awdeorio/followers/">2 followers</a>
-            <a href="/users/awdeorio/following/">2 following</a>
+        {% if logname_follows_username %}
+            following
+        {% elif logname == username %}
+        {% else %}
+            not following
+        {% endif %}
         </div>
         <div>
-            Andrew DeOrio
-            <a href="/posts/1/">
-            <img src="/uploads/122a7d27ca1d7420a1072f695d9290fad4501a41.jpg" 
-            alt="text" class= "prof-imgs">
+            {{total_posts}} posts
+            <a href="/users/{{username}}/followers/">{{followers}} followers</a>
+            <a href="/users/{{username}}/following/">{{following}} following</a>
+        </div>
+        {{fullname}}
+        <div>            
+            {%for post in posts%}
+            <a href="/posts/{{post.postid}}/">
+            <img src="{{post.img_url}}" alt="text" class= "page-imgs">
             </a>
-            <a href="/posts/3/">
-                <img src="/uploads/9887e06812ef434d291e4936417d125cd594b38a.jpg" 
-                alt="text" class= "prof-imgs">
-            </a>
+            {% endfor %}
         </div>
     </body>
 </html>

@@ -16,10 +16,10 @@ import click
 def main(input_dir, output, verbose):
     """Templated static website generator."""
     file_read = load_json(input_dir)
-    for q in range(len(file_read)):
-        file_url = file_read[q]['url']
+    for i_1 in range(len(file_read)):
+        file_url = file_read[i_1]['url']
         file_url = ''.join(file_url)
-        template_dir = file_read[q]['template']
+        template_dir = file_read[i_1]['template']
         template_dir = ''.join(template_dir)
         pwd = os.getcwd()
         load_template_dir = pwd + '/' + input_dir + "/templates/"
@@ -28,29 +28,26 @@ def main(input_dir, output, verbose):
             autoescape=jinja2.select_autoescape(['html', 'xml']),
         )
         template = template_env.get_template(template_dir)
-        html_output = template.render(file_read[q]["context"])
+        html_output = template.render(file_read[i_1]["context"])
         if output is not None:
-            output_dir = ''.join(output)
+            output_dir = "/" + ''.join(output)
             output_p = output_dir
         else:
-            output_dir = input_dir + "/html"
+            output_dir =  "/" + input_dir + "/html"
             output_p = input_dir
         try:
-            pathlib.Path(pwd + file_url + output_dir).mkdir(parents=True,
+            pathlib.Path(pwd + output_dir + file_url).mkdir(parents=True,
                         exist_ok=False)
-            filename = pathlib.Path(pwd + file_url + output_dir +
-                                    "/" + template_dir)
+            filename = pathlib.Path(pwd + output_dir + file_url + "index.html")
             with open(filename, "w") as file_open:
                 file_open.write(html_output)
-            if pathlib.Path.exists(pathlib.Path(pwd + file_url
-                                + input_dir + "/static/")):
-                shutil.copytree(pathlib.Path(pwd + file_url
-                        + input_dir + "/static/css/"),
-                        pathlib.Path(pwd + file_url + output_dir + "/css/"))
+            if pathlib.Path.exists(pathlib.Path(pwd + "/" + input_dir + file_url + "/static/")):
+                shutil.copytree(pathlib.Path(pwd + "/" + input_dir + file_url + "/static/css/"),
+                        pathlib.Path(pwd + output_dir + file_url + "/css/"))
                 if verbose:
                     print(f"Copied {input_dir}/static -> {output_dir}")
             if verbose:
-                print(f"Rendered {template_dir} -> {output_dir}{file_url}index.html/")
+                print(f"Rendered {template_dir} -> {output_dir}{file_url}index.html")
         except FileExistsError:
             print(f"Error: '{output_p}' already exists")
 

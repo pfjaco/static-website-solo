@@ -1,8 +1,9 @@
 <!DOCTYPE html>
+
 <html lang="en">
     <head>
         <title>Insta485</title>
-        <link rel="stylesheet" href="./css/style.css">
+        <link rel="stylesheet" href="/css/style.css">
     </head>
             <body>
                 
@@ -18,94 +19,38 @@
                     <div id = "top-bar-right" class="top-bar">
                     <a href="/explore/">explore</a>
                     &nbsp;|&nbsp;
-                    <a href="/users/awdeorio/">awdeorio</a>
+                    <a href="/users/ {{logname}}/"> {{logname}}  </a>
                     </div>
                 
                 </div>
                 
                         <hr>
-            
-                
-                <div id="post-3" class="insta-post">
+                {%for post in posts%}
+                <div class="insta-post">
                     <div class="post-header">
-                        <a href="/users/awdeorio/">
-                        <img src="/uploads/e1a7c5c32973862ee15173b0259e3efdb6a391af.jpg" alt="text" class= "prof-imgs">
-                        </a>
-                        
-                        <a href="/users/awdeorio/">awdeorio</a>
-                        <a href="/posts/3/"> 10 minutes ago </a>
-                    </div>
-                    <div class="post-body">
-                        <img src="/uploads/9887e06812ef434d291e4936417d125cd594b38a.jpg" alt="text">
-                        <div class="post-likes"> 
-                            <p> 1 like</p>
-                        </div>
-                        <div class= "post-comments">
-                            <ul>
-                            <li class="comment">                         
-                            <a href="/users/awdeorio/">awdeorio</a>
-                            #chickensofinstagram
-                            </li>
-                            <li class="comment">
-                            <a href="/users/jflinn/"> jflinn </a> 
-                            I &lt;3 chickens
-                            </li>
-                            <li class="comment">
-                            <a href="/users/michjc/">michjc</a>
-                            Cute overload!
-                            </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div id="post-2" class="insta-post">
-                    <div class="post-header">
-                        <a href="/users/jflinn/">
-                        <img src="/uploads/505083b8b56c97429a728b68f31b0b2a089e5113.jpg" alt="text" class= "prof-imgs">
+                        <a href="/users/{{post.owner}}/">
+                        <img src="{{post.owner_img_url}}" alt="text" class= "prof-imgs">
                         </a>                        
-                        <a href="/users/jflinn/">jflinn</a>
-                        <a href="/posts/2/"> 4 hours ago </a>
+                        <a href="/users/{{post.owner}}/">{{post.owner}}</a>
+                        <a href="/posts/{{post.postid}}/"> {{post.timestamp}}</a>
                     </div>
                     <div class="post-body">
-                        <img src="/uploads/ad7790405c539894d25ab8dcf0b79eed3341e109.jpg" alt="text">
+                        <img src= "{{post.img_url}}" alt="text">
                         <div class="post-likes"> 
-                            <p>2 likes</p>
+                            <p> {{post.likes}} likes</p>
                         </div>
                         <div class= "post-comments">
                             <ul>
+                            {% for comment in post.comments%}
                             <li class="comment">
-                            <a href="/users/awdeorio/"> awdeorio </a> Sick #crossword
+                            <a href="/users/{{comment.owner}}/"> {{comment.owner}} </a> 
+                            {{comment.text}}
                             </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div id="post-1" class="insta-post">
-                    <div class="post-header">
-                        <a href="/users/awdeorio/">
-                        <img src="/uploads/e1a7c5c32973862ee15173b0259e3efdb6a391af.jpg" alt="text" class= "prof-imgs">
-                        </a>                        
-                        <a href="/users/awdeorio/">awdeorio</a>
-                        <a href="/posts/1/"> a day ago</a>
-                    </div>
-                    <div class="post-body">
-                        <img src="/uploads/122a7d27ca1d7420a1072f695d9290fad4501a41.jpg" alt="text">
-                        <div class="post-likes"> 
-                            <p> 3 likes</p>
-                        </div>
-                        <div class= "post-comments">
-                            <ul>
-                            <li class="comment">
-                            <a href="/users/jflinn/"> jflinn </a> 
-                            Walking the plank #chickensofinstagram
-                            </li>
-                            <li class="comment">
-                            <a href="/users/awdeorio/"> awdeorio </a> 
-                            This was after trying to teach them to do a #crossword
-                            </li>
+                            {% endfor %}
                             </ul>                        
                         </div>
                     </div>
                 </div>
+                {% endfor %}                
             </body>
 </html>
